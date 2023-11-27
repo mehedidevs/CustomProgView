@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Shader
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Parcel
@@ -153,6 +154,7 @@ open class TextRoundCornerProgressBar : AnimatedRoundCornerProgressBar,
     }
 
     private fun drawTextProgress() {
+        tvProgress.setTypeface(null, Typeface.BOLD)
         tvProgress.text = textProgress
     }
 
@@ -235,6 +237,7 @@ open class TextRoundCornerProgressBar : AnimatedRoundCornerProgressBar,
             }
 
             tvProgress.layoutParams = this
+            tvProgress.setTypeface(null, Typeface.BOLD)
         }
     }
 
@@ -265,13 +268,15 @@ open class TextRoundCornerProgressBar : AnimatedRoundCornerProgressBar,
 
     fun getProgressText(): String? = textProgress
 
-    fun setProgressText(text: String) {
+    fun setProgressText(prog: Int) {
+        val text = "${prog - 10}%"
         textProgress = text
         drawTextProgress()
         drawTextProgressPosition()
+        tvProgress.setTypeface(null, Typeface.BOLD)
     }
 
-    fun setMinProg(){
+    fun setMinProg() {
         val linearLayout = LinearLayout(this.context)
         linearLayout.layoutParams = LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -280,7 +285,33 @@ open class TextRoundCornerProgressBar : AnimatedRoundCornerProgressBar,
         linearLayout.orientation = HORIZONTAL
 
         linearLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.prog_back, null)
-        val totalShape: Int = 3
+        // val totalShape: Int = 5
+        //    val totalShape: Int = if (progress <10) progress / 2  else progress / 3
+        for (i in 0 until 5) {
+            val view = View(this.context)
+            view.background =
+                ResourcesCompat.getDrawable(resources, R.drawable.segment_shape, null)
+            linearLayout.addView(view)
+        }
+        setProgress(10)
+        setProgressText(10)
+
+    }
+
+
+    override fun setProgress(progress: Int) {
+
+
+        val linearLayout = LinearLayout(this.context)
+        linearLayout.layoutParams = LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        linearLayout.orientation = HORIZONTAL
+
+        linearLayout.background =
+            ResourcesCompat.getDrawable(resources, R.drawable.prog_back, null)
+        val totalShape: Int = if (progress < 12) progress / 3 else progress / 4
 
         for (i in 0 until totalShape) {
             val view = View(this.context)
@@ -289,69 +320,19 @@ open class TextRoundCornerProgressBar : AnimatedRoundCornerProgressBar,
             linearLayout.addView(view)
         }
 
-    }
 
 
-    override fun setProgress(progress: Int) {
-        val linearLayout = LinearLayout(this.context)
-        linearLayout.layoutParams = LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        linearLayout.orientation = HORIZONTAL
-
-//        linearLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.prog_back, null)
-//        val totalShape: Int = 10 / 3
-//
-//        for (i in 0 until totalShape) {
-//            val view = View(this.context)
-//            view.background =
-//                ResourcesCompat.getDrawable(resources, R.drawable.segment_shape, null)
-//            linearLayout.addView(view)
-//        }
-
-
-        when (progress) {
-
-//            in 10..15 -> {
-//                linearLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.prog_back, null)
-//                val totalShape: Int = 10 / 4
-//
-//                for (i in 0 until totalShape) {
-//                    val view = View(this.context)
-//                    view.background =
-//                        ResourcesCompat.getDrawable(resources, R.drawable.segment_shape, null)
-//                    linearLayout.addView(view)
-//                }
-//
-//
-//
-//                layoutProgress.background = convertLinearLayoutToDrawable(linearLayout)
-//
-//            }
-
-            in 10..110 -> {
-
-                linearLayout.background =
-                    ResourcesCompat.getDrawable(resources, R.drawable.prog_back, null)
-                val totalShape: Int = progress / 3
-
-                for (i in 0 until totalShape) {
-                    val view = View(this.context)
-                    view.background =
-                        ResourcesCompat.getDrawable(resources, R.drawable.segment_shape, null)
-                    linearLayout.addView(view)
-                }
+        layoutProgress.background = convertLinearLayoutToDrawable(linearLayout)
 
 
 
-                layoutProgress.background = convertLinearLayoutToDrawable(linearLayout)
-            }
-        }
+
 
 
 
         setProgress(progress.toFloat())
+
+        setProgressText(progress)
     }
 
 
@@ -363,7 +344,7 @@ open class TextRoundCornerProgressBar : AnimatedRoundCornerProgressBar,
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
             MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
         )
-        linearLayout.layout(0, 0, linearLayout.measuredWidth, linearLayout.measuredHeight)
+        linearLayout.layout(0, 0, linearLayout.measuredWidth + 1, linearLayout.measuredHeight)
 
         val layout_width = if (linearLayout.measuredWidth <= 0) 10 else linearLayout.measuredWidth
         val layout_height =
@@ -399,7 +380,7 @@ open class TextRoundCornerProgressBar : AnimatedRoundCornerProgressBar,
             linearLayout.measuredWidth.toFloat(),
             linearLayout.measuredHeight.toFloat()
         )
-        outputCanvas.drawRoundRect(rectF, 0f, 0f, paint)
+        outputCanvas.drawRoundRect(rectF, 30f, 30f, paint)
 
         // Create a BitmapDrawable from the rounded rectangle
         return BitmapDrawable(resources, outputBitmap)
@@ -420,8 +401,10 @@ open class TextRoundCornerProgressBar : AnimatedRoundCornerProgressBar,
     fun getTextProgressSize(): Int = textProgressSize
 
     fun setTextProgressSize(@Px size: Int) {
-        textProgressSize = size
+        textProgressSize = 40
+        tvProgress.setTypeface(null, Typeface.BOLD)
         drawTextProgressSize()
+
         drawTextProgressPosition()
     }
 

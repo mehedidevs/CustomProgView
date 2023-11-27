@@ -13,17 +13,17 @@
 
 
         <LinearLayout
-            android:id="@+id/layout_progress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:minWidth="50dp"
-            android:orientation="horizontal" />
-
-        <LinearLayout
 
             android:id="@+id/layout_secondary_progress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/layout_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minWidth="50dp"
             android:orientation="horizontal" />
 
         <TextView
@@ -36,7 +36,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:maxLines="1"
-      />
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

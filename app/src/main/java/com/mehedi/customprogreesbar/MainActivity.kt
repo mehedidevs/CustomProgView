@@ -15,14 +15,15 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.textProg.setMax(100)
+        binding.textProg.setMax(110)
 
         binding.textProg.setMinProg()
+
 
         binding.seekBar1.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
-                setPro(progress)
+                setPro(progress+10)
                 binding.textProg.setTextProgressSize(30)
                 binding.textProg.setTextProgressMargin(-5)
                 binding.textProg.setTextProgressColor(
@@ -47,8 +48,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setPro(prog: Int) {
+
         binding.textProg.setProgress(prog)
-        binding.textProg.setProgressText("$prog%")
+        binding.textProg.setProgressText(prog)
 
 
 

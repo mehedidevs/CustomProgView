@@ -281,8 +281,8 @@ abstract class BaseRoundCornerProgressBar : LinearLayout {
         drawProgress(
             layoutProgress = layoutProgress,
             progressDrawable = createProgressDrawable(),
-            max = _max,
-            progress = _progress,
+            max = _max+10,
+            progress = _progress+10,
             totalWidth = _totalWidth.toFloat(),
             radius = possibleRadius,
             padding = _padding,
@@ -295,7 +295,7 @@ abstract class BaseRoundCornerProgressBar : LinearLayout {
         drawProgress(
             layoutProgress = layoutSecondaryProgress,
             progressDrawable = createSecondaryProgressDrawable(),
-            max = _max,
+            max = _max+10,
             progress = _secondaryProgress,
             totalWidth = _totalWidth.toFloat(),
             radius = possibleRadius,
@@ -429,7 +429,7 @@ abstract class BaseRoundCornerProgressBar : LinearLayout {
     open fun setProgress(progress: Float) {
         _progress =
             if (progress < 0) 0f
-            else if (progress <= 10) 10f
+//            else if (progress <= 10) 10f
             else progress.coerceAtMost(_max)
         drawPrimaryProgress()
         _onProgressChanged?.invoke(this, _progress, true, false)
@@ -522,8 +522,8 @@ abstract class BaseRoundCornerProgressBar : LinearLayout {
         val state = SavedState(superState)
 
         with(state) {
-            max = _max
-            progress = _progress
+            max = _max+10
+            progress = _progress+10
             secondaryProgress = _secondaryProgress
 
             radius = _radius

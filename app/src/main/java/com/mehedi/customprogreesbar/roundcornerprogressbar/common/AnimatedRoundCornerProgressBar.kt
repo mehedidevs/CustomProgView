@@ -89,6 +89,7 @@ abstract class AnimatedRoundCornerProgressBar : BaseRoundCornerProgressBar {
     override fun setProgress(progress: Float) {
         val actualProgress =
             if (progress < 0) 0f
+            else if (progress < 10) 10f
             else progress.coerceAtMost(_max)
 
         clearProgressAnimation()
